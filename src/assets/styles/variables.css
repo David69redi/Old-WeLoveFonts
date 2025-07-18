@@ -1,0 +1,19 @@
+:root {
+  --color-background-card: #f2f2f2;
+  --color-background-button: #ffffff;
+  --color-text: rgb(28, 28, 28);
+  --color-text-click: #0d0d0d
+  --color-background-click:#6a6a6a;
+  --color-background-body: #d8d8d8;
+  --second-color-background-body: #b0afaf;
+}
+
+.dark-theme {
+  --color-background-card: #322f2f;
+  --color-background-button: #535151;
+  --color-text: #dcdcdc;
+  --color-text-click: #ffffff;
+  --color-background-click:#6a6a6a;
+  --color-background-body: #212121;
+  --second-color-background-body: #555555;
+}
