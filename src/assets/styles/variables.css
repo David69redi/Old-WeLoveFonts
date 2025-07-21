@@ -1,19 +1,19 @@
 :root {
-  --color-background-card: #f2f2f2;
+  --color-background-card: #f5f5f5;
   --color-background-button: #ffffff;
-  --color-text: rgb(28, 28, 28);
-  --color-text-click: #0d0d0d
-  --color-background-click:#6a6a6a;
-  --color-background-body: #d8d8d8;
-  --second-color-background-body: #b0afaf;
+  --color-text: #1e1e1e;
+  --color-text-click: #000000;
+  --color-background-click: #c2c2c2;
+  --color-background-body: #e5e5e5;
+  --second-color-background-body: #adadad;
 }
 
 .dark-theme {
-  --color-background-card: #322f2f;
-  --color-background-button: #535151;
-  --color-text: #dcdcdc;
+  --color-background-card: #2c2c2c;
+  --color-background-button: #3a3a3a;
+  --color-text: #e0e0e0;
   --color-text-click: #ffffff;
-  --color-background-click:#6a6a6a;
-  --color-background-body: #212121;
-  --second-color-background-body: #555555;
+  --color-background-click: #5a5a5a;
+  --color-background-body: #1c1c1c;
+  --second-color-background-body: #404040;
 }

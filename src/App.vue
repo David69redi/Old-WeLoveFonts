@@ -4,6 +4,15 @@ import BotonCopiar from "./assets/components/BotonCopiar.vue";
 import BotonSwitchTheme from "./assets/components/BotonSwitchTheme.vue";
 
 const inputUser = ref("");
+const isFocused = ref(false);
+
+function onFocus() {
+  isFocused.value = true;
+}
+
+function onBlur() {
+  isFocused.value = false;
+}
 
 function switchTheme() {
   document.body.classList.toggle("dark-theme");
@@ -28,12 +37,26 @@ function toFont(text, toFontName) {
   const normalChars = Array.from(normalFont.chars);
   const targetChars = Array.from(targetFont.chars);
 
-  return Array.from(text)
-    .map((char) => {
-      const index = normalChars.indexOf(char);
-      return index !== -1 ? targetChars[index] : char;
-    })
-    .join("");
+  const charMap = {};
+  for (let i = 0; i < normalChars.length; i++) {
+    charMap[normalChars[i]] = targetChars[i] || normalChars[i];
+  }
+
+  // Descompone texto: "é" → "e" + "◌́"
+  const decomposed = text.normalize("NFD");
+
+  let result = "";
+  for (const char of decomposed) {
+    // Si es un acento (combining mark), lo dejamos.
+    if (/[\u0300-\u036f]/.test(char)) {
+      result += char;
+    } else {
+      result += charMap[char] || char;
+    }
+  }
+
+  // Volver a recomponer los caracteres acentuados.
+  return result.normalize("NFC");
 }
 
 const FONTS = [
@@ -111,6 +134,13 @@ const FONTS = [
       maxlength="256"
       type="text"
       v-model="inputUser"
+      @focus="onFocus"
+      @blur="onBlur"
+      :class="{
+        'con-texto': inputUser.length > 0,
+        'en-foco': isFocused,
+        'fuera-foco': !isFocused && inputUser.length > 0,
+      }"
       placeholder="Introduce un texto"
     />
 
@@ -139,7 +169,7 @@ const FONTS = [
         >
       </div>
       <div>
-        <a target="_blank" href="https://www.instagram.com/">
+        <a target="_blank" href="https://www.instagram.com/itsdavidev?igsh=MXQ1eW9yMHUzeWFyMQ==">
           <i class="fa-brands fa-instagram"></i>
         </a>
       </div>
@@ -177,7 +207,7 @@ main {
   }
   h1 {
     font-family: "Korcy Oblique";
-    font-size: 3rem;
+    font-size: 3.8rem;
     margin-top: 20px;
     gap: 30px;
   }
@@ -189,22 +219,39 @@ main {
   }
 
   input {
-    font-size: 1rem;
-    color: var(--color-text);
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 350px;
-    height: 20px;
-    border: none;
-    border-bottom: 1px solid transparent;
-    outline: none;
-    transition: border-bottom-color 0.3s ease;
-    background: none;
+  font-size: 1.3rem;
+  color: var(--color-text);
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 350px;
+  height: 40px;
+  border: 1.5px dashed var(--color-text); /* borde siempre presente, tipo y grosor fijo */
+  border-bottom-width: 2px; /* para que bottom sea más grueso */
+  outline: none;
+  background: none;
+  /* transition: border-color 0.3s ease, border-bottom-width 0.3s ease; */
+  border-color: transparent; /* inicial transparente (sin borde visible) */
+}
 
-    &:focus {
-      border-bottom: 1px solid var(--color-text);
-    }
-  }
+input.en-foco {
+  border-bottom-width: 2px;
+  border-color: var(--color-text);
+  border-bottom: solid; /* cambia solo bottom a sólido */
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+input.fuera-foco {
+  border-color: var(--color-text);
+  border-style: dashed;
+  border-bottom-width: 1.5px;
+}
+
+input:not(.con-texto):not(.en-foco) {
+  border-color: transparent;
+}
+
 }
 
 footer {
@@ -274,7 +321,7 @@ footer {
     display: flex;
     align-items: center;
     min-height: 30px;
-    border: 0.1px dashed var(--color-text);
+    border: 1.2px dashed var(--color-text);
   }
 }
 
