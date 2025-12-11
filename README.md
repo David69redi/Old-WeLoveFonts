@@ -1,4 +1,4 @@
-# WeLoveFonts
+# OLD-WeLoveFonts
 
 
 ![Logo](./src/assets/svg/LogoWLF.svg)
@@ -19,7 +19,7 @@
 
 ## Demo
 
-Check out the site at: [https://we-love-fonts.vercel.app/](https://we-love-fonts.vercel.app/)
+Check out the site at: (https://we-love-fonts-js.vercel.app/)
 
 ## Technologies Used
 
